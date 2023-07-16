@@ -4,7 +4,8 @@ from keyboards.inline.information import inform_keyboards
 
 from loader import bot
 from states.state import StateMessage
-from utils.API_commands import airoport_information
+from utils.API_commands import airoport_information, flight_information
+
 
 @bot.message_handler(state=StateMessage.airport)
 def ask_airport(message: Message):
@@ -14,6 +15,23 @@ def ask_airport(message: Message):
         bot.delete_state(message.from_user.id, message.chat.id)
     else:
         bot.send_message(message.chat.id, f"Введенный вами код аэропорта неправильный. Пожалуйста, попробуйте еще раз.")
+
+@bot.message_handler(state=StateMessage.flight_code)
+def ask_airport(message: Message):
+    with bot.retrieve_data(message.chat.id, message.from_user.id) as data:
+        data['flight_code'] = message.text
+    bot.send_message(message.chat.id, "Введите дату рейса (в формате: ГГГГ-ММ-ДД, например: 2023-07-01):")
+    bot.set_state(message.chat.id, StateMessage.flight)
+
+
+@bot.message_handler(state=StateMessage.flight)
+def ask_airport(message: Message):
+    with bot.retrieve_data(message.chat.id, message.from_user.id) as data:
+        data['flight_date'] = message.text
+    inform_flight = flight_information(message)
+    bot.send_message(message.chat.id, f"Информация о рейсе: {inform_flight}")
+    bot.delete_state(message.from_user.id, message.chat.id)
+
 
 @bot.message_handler(state=StateMessage.flight)
 def ask_airport(message: Message):
