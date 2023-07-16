@@ -7,5 +7,6 @@ class StateMessage(StatesGroup):
     airport = State()
     flight_code = State()
     flight = State()
+    flight_schedule_code = State()
     flight_schedule = State()
     distance_time = State()

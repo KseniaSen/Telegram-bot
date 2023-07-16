@@ -8,10 +8,10 @@ from database.common.models import ModelBase, db
 T = TypeVar("T")
 
 
-def _store_date(model: T, *data: List[Dict]) -> None:
+def _store_date(model: T, data: List[Dict]) -> None:
     """Функция для добавления записи в базу данных"""
     with db.atomic():
-        model.insert_many(*data).execute()
+        model.insert_many(data).execute()
 
 
 def _retrieve_all_data(model: T, *columns: ModelBase) -> pw.ModelSelect:

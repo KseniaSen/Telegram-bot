@@ -1,7 +1,12 @@
+from database.common.models import db
+from database.core import crud
 from loader import bot
 from telebot import custom_filters
 import handlers  # noqa
 from utils.set_bot_commands import set_default_commands
+
+db_write = crud.create()
+db_read = crud.retrieve()
 
 if __name__ == "__main__":
     set_default_commands(bot)
