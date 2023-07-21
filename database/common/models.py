@@ -17,4 +17,5 @@ class History(ModelBase):
     """Класс History Родитель: ModelBase"""
     code = pw.TextField()
     message = pw.TextField()
+    user_id = pw.TextField()
     #created_at = pw.DateTimeField(default=datetime.now())

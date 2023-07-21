@@ -14,12 +14,14 @@ def _store_date(model: T, data: List[Dict]) -> None:
         model.insert_many(data).execute()
 
 
-def _retrieve_all_data(model: T, *columns: ModelBase) -> pw.ModelSelect:
+def _retrieve_all_data(model: T, *columns: ModelBase, user_id) -> pw.ModelSelect:
     """Функция для получения данных из базы данных"""
+    his = ''
     with db.atomic():
-        response = model.select(*columns)
-
-    return response
+        response = list(model.select().where(model.user_id == user_id).order_by(model.created_at.desc()).limit(5))
+        for string in reversed(response):
+            his = his + str(string.created_at) + ': ' + string.message + '\n'
+    return his
 
 
 class CRUDInteface:

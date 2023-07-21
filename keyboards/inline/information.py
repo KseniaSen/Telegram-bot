@@ -22,3 +22,13 @@ def choice_inform(call: types.CallbackQuery):
     bot.send_message(call.message.chat.id,
                      f'Какую информацию вы бы хотели получить?',
                      reply_markup=markup)
+
+def choice_departure_arrival(message):
+    markup = types.InlineKeyboardMarkup()
+    button_arrival = types.InlineKeyboardButton(text="Arrival", callback_data="arrival")
+    markup.add(button_arrival)
+    button_departure = types.InlineKeyboardButton(text="Departure", callback_data="departure")
+    markup.add(button_departure)
+    bot.send_message(message.chat.id,
+                     'Arrival or departure?',
+                     reply_markup=markup)
