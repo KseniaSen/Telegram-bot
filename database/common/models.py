@@ -2,7 +2,7 @@ from datetime import datetime
 
 import peewee as pw
 
-db = pw.SqliteDatabase('Logging.db')
+db = pw.SqliteDatabase('History.db')
 
 
 class ModelBase(pw.Model):
