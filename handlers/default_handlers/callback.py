@@ -4,8 +4,6 @@ from loader import bot
 from states.state import StateMessage
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-from utils.API_commands import flight_schedule_information
-
 
 @bot.callback_query_handler(state=None, func=lambda call: True)
 def callback_inline(call):
@@ -15,16 +13,19 @@ def callback_inline(call):
                 choice_inform(call)
             elif call.data == "airport":
                 bot.set_state(call.message.chat.id, StateMessage.airport)
-                bot.send_message(call.message.chat.id, "Введите код аэропорта (3-значный IATA-код аэропорта. Например: AMS, SFO, LAX и т. д.)):")
+                bot.send_message(call.message.chat.id, "Введите код аэропорта (3-значный IATA-код аэропорта. "
+                                                       "Например: AMS, SFO, LAX и т. д.)):")
             elif call.data == "flight":
                 bot.set_state(call.message.chat.id, StateMessage.flight_code)
                 bot.send_message(call.message.chat.id, "Введите номер рейса:")
             elif call.data == "flight_schedule":
                 bot.set_state(call.message.chat.id, StateMessage.airport_schedule_code)
-                bot.send_message(call.message.chat.id, "Введите код аэропорта (3-значный IATA-код аэропорта. Например: AMS, SFO, LAX и т. д.)):")
+                bot.send_message(call.message.chat.id, "Введите код аэропорта (3-значный IATA-код аэропорта. "
+                                                       "Например: AMS, SFO, LAX и т. д.)):")
             elif call.data == "distance_time":
                 bot.set_state(call.message.chat.id, StateMessage.distance_time_from)
-                bot.send_message(call.message.chat.id, "Введите код аэропорта отправления (3-значный IATA-код аэропорта. Например: AMS, SFO, LAX и т. д.)):")
+                bot.send_message(call.message.chat.id, "Введите код аэропорта отправления (3-значный IATA-код "
+                                                       "аэропорта. Например: AMS, SFO, LAX и т. д.)):")
             elif call.data == "arrival" or call.data == "departure":
                 with bot.retrieve_data(call.message.chat.id, call.message.chat.id,) as data:
                     if call.data == "arrival":
@@ -94,9 +95,5 @@ def callback_inline(call):
                     data['timefrom'] = "T22:00"
                     data['timeto'] = "T24:00"
                 ask_flight_schedule(call.message)
-                            # bot.send_message(call.message.chat.id,
-                #                  "Введите начало диапазона поиска (в формате:  ГГГГ-ММ-ДДTЧЧ:мм), например: 2023-04-04T20:00):")
-                # bot.set_state(call.message.chat.id, StateMessage.airport_schedule_fromLocal)
-
     except Exception as e:
         print(repr(e))

@@ -1,14 +1,14 @@
 from telebot.types import Message
 from telebot import types
 from loader import bot
-from states.state import StateMessage
 
 
 def inform_keyboards(message: Message):
     markup = types.InlineKeyboardMarkup()
     button_yes = types.InlineKeyboardButton(text="Да", callback_data="inform")
     markup.add(button_yes)
-    bot.send_message(message.chat.id, f'Интересуетесь ли вы информацией об аэропортах, рейсах и длительности полета?', reply_markup=markup)
+    bot.send_message(message.chat.id, f'Интересуетесь ли вы информацией об аэропортах, рейсах и длительности полета?',
+                     reply_markup=markup)
 
 
 def choice_inform(call: types.CallbackQuery):
@@ -36,6 +36,7 @@ def choice_departure_arrival(message):
                      'Arrival or departure?',
                      reply_markup=markup)
 
+
 def choice_period(message):
     markup = types.InlineKeyboardMarkup()
     button_0_2 = types.InlineKeyboardButton(text="00:00 - 02:00", callback_data="0_2")
@@ -50,7 +51,7 @@ def choice_period(message):
     markup.add(button_8_10)
     button_10_12 = types.InlineKeyboardButton(text="10:00 - 12:00", callback_data="10_12")
     markup.add(button_10_12)
-    button_12_14= types.InlineKeyboardButton(text="12:00 - 14:00", callback_data="12_14")
+    button_12_14 = types.InlineKeyboardButton(text="12:00 - 14:00", callback_data="12_14")
     markup.add(button_12_14)
     button_14_16 = types.InlineKeyboardButton(text="14:00 - 16:00", callback_data="14_16")
     markup.add(button_14_16)

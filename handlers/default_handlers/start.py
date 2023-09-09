@@ -1,5 +1,4 @@
 from telebot.types import Message
-
 from keyboards.inline.information import inform_keyboards
 from loader import bot
 

@@ -1,8 +1,7 @@
-from database.common.models import db
 from database.core import crud
 from loader import bot
 from telebot import custom_filters
-import handlers  # noqa
+import handlers
 from utils.set_bot_commands import set_default_commands
 
 db_write = crud.create()
