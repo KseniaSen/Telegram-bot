@@ -56,11 +56,11 @@ def flight_information(message):
         json_response = response.json()
         info = parsing_json_flight(json_response[0])
         data = [{"code": response.status_code, "message": info, "created_at": datetime.now(),
-                 "user_id": message.from_user.id}]
+                 "user_id": message.chat.id}]
         db_write(History, data)
         return info
     else:
-        data = [{"code": response.status_code, "message": response.reason, "user_id": message.from_user.id}]
+        data = [{"code": response.status_code, "message": response.reason, "user_id": message.chat.id}]
         db_write(History, data)
         if response.status_code == 204:
             return 'Информация о рейсе не найдена.'
@@ -87,12 +87,14 @@ def flight_schedule_information(message):
     if response.status_code == 200:
         json_response = response.json()
         info = parsing_json_airport_schedule(json_response, data['direction'])
-        data = [{"code": response.status_code, "message": info, "created_at": datetime.now(),
-                 "user_id": message.from_user.id}]
+        # data = [{"code": response.status_code, "message": info, "created_at": datetime.now(),
+        #          "user_id": message.chat.id}]
+        data = [{"code": response.status_code, "message": 'Flight schedule: Airport: ' + str(data['airport_schedule_code'])
+                + ' Date: ' + str(data['flight_date']), "created_at": datetime.now(), "user_id": message.chat.id}]
         db_write(History, data)
         return info
     else:
-        data = [{"code": response.status_code, "message": response.reason, "user_id": message.from_user.id}]
+        data = [{"code": response.status_code, "message": response.reason, "user_id": message.chat.id}]
         db_write(History, data)
         if response.status_code == 204:
             return 'Расписание рейсов не найдено.'

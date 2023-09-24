@@ -9,5 +9,8 @@ from database.common.models import History
 @bot.message_handler(commands=["history"])
 def bot_history(message: Message):
     history_request = db_read(History, user_id=message.from_user.id)
-    bot.reply_to(message, history_request)
+    try:
+        bot.reply_to(message, history_request)
+    except:
+        bot.reply_to(message, 'История запросов отсутствует.')
 
